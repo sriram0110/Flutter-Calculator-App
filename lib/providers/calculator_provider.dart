@@ -19,6 +19,8 @@ class CalculatorProvider extends ChangeNotifier {
       case 'x':
         handleOperator('*');
         break;
+      case '%':
+        handleOperator('%');
       case '+/-':
         handleOperator('-');
         break;
@@ -33,8 +35,7 @@ class CalculatorProvider extends ChangeNotifier {
   }
 
   void handleNumber(String text) {
-    if(expression.length == 11) 
-    {
+    if (expression.length == 11) {
       return;
     }
     expression += text;
@@ -53,7 +54,13 @@ class CalculatorProvider extends ChangeNotifier {
       if (text == '-' && expression[expression.length - 1] == '-') {
         return;
       }
-      if (isOperator(expression[expression.length - 1])) {
+      if (text == '%' && expression.contains('%')) {
+        return;
+      }
+      if (text == '%' && isNumeric(expression[expression.length - 1])) {
+        // If the last character is a number, add the modulo operator
+        expression += text;
+      } else if (isOperator(expression[expression.length - 1])) {
         expression = expression.substring(0, expression.length - 1);
       }
       expression += text;
@@ -69,8 +76,7 @@ class CalculatorProvider extends ChangeNotifier {
   }
 
   void calculate() {
-    if(expression.trim().isEmpty)
-    {
+    if (expression.trim().isEmpty) {
       return;
     }
     Parser p = Parser();
@@ -81,9 +87,9 @@ class CalculatorProvider extends ChangeNotifier {
 
     history = expression;
     expression = result.toString();
-     if (expression == history) {
-    expression = '';
-  }
+    if (expression == history) {
+      expression = '';
+    }
     notifyListeners();
   }
 
