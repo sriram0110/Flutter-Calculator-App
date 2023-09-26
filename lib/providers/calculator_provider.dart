@@ -19,10 +19,8 @@ class CalculatorProvider extends ChangeNotifier {
       case 'x':
         handleOperator('*');
         break;
-      case '%':
-        handleOperator('%');
       case '+/-':
-        handleOperator('-');
+        toggleSign();
         break;
       default:
         if (isNumeric(text)) {
@@ -31,6 +29,15 @@ class CalculatorProvider extends ChangeNotifier {
           handleOperator(text);
         }
         break;
+    }
+  }
+
+  void toggleSign() {
+    if (expression[0] != '-') {
+      expression = '-$expression';
+    } else {
+      expression = expression.substring(1);
+      notifyListeners();
     }
   }
 
@@ -43,7 +50,7 @@ class CalculatorProvider extends ChangeNotifier {
   }
 
   bool isOperator(String str) {
-    return ['+', '-', 'x', '/'].contains(str);
+    return ['+', '-', 'x', '/', '.', '%'].contains(str);
   }
 
   void handleOperator(String text) {
@@ -54,11 +61,8 @@ class CalculatorProvider extends ChangeNotifier {
       if (text == '-' && expression[expression.length - 1] == '-') {
         return;
       }
-      if (text == '%' && expression.contains('%')) {
-        return;
-      }
+
       if (text == '%' && isNumeric(expression[expression.length - 1])) {
-        // If the last character is a number, add the modulo operator
         expression += text;
       } else if (isOperator(expression[expression.length - 1])) {
         expression = expression.substring(0, expression.length - 1);

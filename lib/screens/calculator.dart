@@ -10,17 +10,17 @@ class Calculator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(  
+      appBar: AppBar(
         title: const Text('Calculator App'),
         backgroundColor: Colors.black,
-      ), 
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             SingleChildScrollView(
-              child: Column( 
+              child: Column(
                 children: [
                   Container(
                     padding: const EdgeInsets.only(right: 15.0),
@@ -47,7 +47,7 @@ class Calculator extends StatelessWidget {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            IconButton( 
+                            IconButton(
                               splashColor: Colors.redAccent,
                               color: Colors.red,
                               icon: const Icon(Icons.clear),
@@ -75,7 +75,7 @@ class Calculator extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 20.0, 
+              height: 20.0,
             ),
             const CalculatorButtonsRow(
               buttonText1: 'AC',
